@@ -1,8 +1,7 @@
 async function getSettings() {
     return await chrome.storage.sync.get({
         blockedUsers: [],
-        blockedWords: [],
-        hiddenCount: 0
+        blockedWords: []
     });
 }
 
@@ -14,8 +13,6 @@ async function processComments() {
         blockedUsers,
         blockedWords
     } = settings;
-
-    let hiddenAdded = 0;
 
     // 通常コメント
     document
@@ -61,8 +58,6 @@ async function processComments() {
                 comment.style.display = "none";
 
                 comment.dataset.blocked = "true";
-
-                hiddenAdded++;
             }
 
         });
@@ -111,21 +106,9 @@ async function processComments() {
                 chat.style.display = "none";
 
                 chat.dataset.blocked = "true";
-
-                hiddenAdded++;
             }
 
         });
-
-    if (hiddenAdded > 0) {
-
-        chrome.storage.sync.set({
-            hiddenCount:
-                settings.hiddenCount +
-                hiddenAdded
-        });
-
-    }
 
 }
 
