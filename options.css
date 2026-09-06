@@ -23,7 +23,7 @@ body {
     font-family: "Segoe UI", sans-serif;
 
     transition:
-        background 0.2s ease,
+        background-color 0.2s ease,
         color 0.2s ease;
 }
 
@@ -50,6 +50,10 @@ body {
     font-size: 14px;
 }
 
+/* -------------------- */
+/* ダークモードスイッチ */
+/* -------------------- */
+
 .theme-toggle {
     display: flex;
     align-items: center;
@@ -58,7 +62,79 @@ body {
 
 .theme-label {
     font-size: 14px;
+    white-space: nowrap;
 }
+
+.switch {
+    position: relative;
+
+    display: inline-block;
+
+    width: 52px;
+    height: 28px;
+}
+
+.switch input {
+    opacity: 0;
+
+    width: 0;
+    height: 0;
+
+    position: absolute;
+}
+
+.slider {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    cursor: pointer;
+
+    background: #cccccc;
+
+    transition: 0.2s;
+
+    border-radius: 999px;
+}
+
+.slider::before {
+    content: "";
+
+    position: absolute;
+
+    width: 22px;
+    height: 22px;
+
+    left: 3px;
+    top: 3px;
+
+    background: #ffffff;
+
+    border-radius: 50%;
+
+    transition: 0.2s;
+}
+
+.switch input:checked + .slider {
+    background: var(--accent);
+}
+
+.switch input:checked + .slider::before {
+    transform: translateX(24px);
+}
+
+.switch input:focus + .slider {
+    box-shadow:
+        0 0 0 3px
+        rgba(204, 0, 0, 0.25);
+}
+
+/* -------------------- */
+/* カード */
+/* -------------------- */
 
 .card {
     background: var(--card);
@@ -83,6 +159,10 @@ body {
     margin: 0;
 }
 
+/* -------------------- */
+/* 件数表示 */
+/* -------------------- */
+
 .count-badge {
     background: var(--accent);
     color: white;
@@ -94,6 +174,10 @@ body {
     font-size: 12px;
     font-weight: bold;
 }
+
+/* -------------------- */
+/* 入力エリア */
+/* -------------------- */
 
 .input-row {
     display: flex;
@@ -116,6 +200,10 @@ input[type="text"] {
     box-sizing: border-box;
 }
 
+/* -------------------- */
+/* ボタン */
+/* -------------------- */
+
 button {
     padding: 10px 16px;
 
@@ -127,15 +215,32 @@ button {
 
     cursor: pointer;
 
-    transition: opacity 0.15s ease;
+    transition:
+        opacity 0.15s ease,
+        background-color 0.15s ease;
 }
 
 button:hover {
     opacity: 0.9;
 }
 
+/* リスト内の削除ボタン */
+
+li button {
+    background: #555555;
+}
+
+li button:hover {
+    background: #333333;
+}
+
+/* -------------------- */
+/* リスト */
+/* -------------------- */
+
 ul {
     list-style: none;
+
     margin: 0;
     padding: 0;
 }
@@ -154,4 +259,23 @@ li:last-child {
     border-bottom: none;
 }
 
-li 
+/* -------------------- */
+/* モバイル対応 */
+/* -------------------- */
+
+@media (max-width: 640px) {
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .input-row {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+    }
+}
