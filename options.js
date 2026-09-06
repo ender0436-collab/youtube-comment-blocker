@@ -33,7 +33,6 @@ async function loadData() {
             "dark",
             data.darkMode
         );
-
     }
 }
 
@@ -49,21 +48,15 @@ function renderUsers(users) {
     users.forEach(user => {
 
         const li =
-            document.createElement(
-                "li"
-            );
+            document.createElement("li");
 
         const text =
-            document.createElement(
-                "span"
-            );
+            document.createElement("span");
 
         text.textContent = user;
 
         const btn =
-            document.createElement(
-                "button"
-            );
+            document.createElement("button");
 
         btn.textContent = "削除";
 
@@ -74,7 +67,6 @@ function renderUsers(users) {
         li.appendChild(btn);
 
         ul.appendChild(li);
-
     });
 }
 
@@ -90,21 +82,15 @@ function renderWords(words) {
     words.forEach(word => {
 
         const li =
-            document.createElement(
-                "li"
-            );
+            document.createElement("li");
 
         const text =
-            document.createElement(
-                "span"
-            );
+            document.createElement("span");
 
         text.textContent = word;
 
         const btn =
-            document.createElement(
-                "button"
-            );
+            document.createElement("button");
 
         btn.textContent = "削除";
 
@@ -115,7 +101,6 @@ function renderWords(words) {
         li.appendChild(btn);
 
         ul.appendChild(li);
-
     });
 }
 
@@ -150,8 +135,6 @@ async function addUser() {
     });
 
     input.value = "";
-
-    loadData();
 }
 
 async function addWord() {
@@ -185,8 +168,6 @@ async function addWord() {
     });
 
     input.value = "";
-
-    loadData();
 }
 
 async function removeUser(user) {
@@ -202,8 +183,6 @@ async function removeUser(user) {
                 x => x !== user
             )
     });
-
-    loadData();
 }
 
 async function removeWord(word) {
@@ -219,84 +198,23 @@ async function removeWord(word) {
                 x => x !== word
             )
     });
-
-    loadData();
 }
 
-document
-    .getElementById("addUser")
-    ?.addEventListener(
-        "click",
-        addUser
-    );
+async function exportCsv() {
 
-document
-    .getElementById("addWord")
-    ?.addEventListener(
-        "click",
-        addWord
-    );
+    const data =
+        await chrome.storage.sync.get({
+            blockedUsers: [],
+            blockedWords: []
+        });
 
-document
-    .getElementById("userInput")
-    ?.addEventListener(
-        "keydown",
-        event => {
+    const rows = [];
 
-            if (
-                event.key === "Enter"
-            ) {
-                addUser();
-            }
+    rows.push("type,value");
 
-        }
-    );
+    data.blockedUsers.forEach(user => {
+        rows.push(`user,"${user}"`);
+    });
 
-document
-    .getElementById("wordInput")
-    ?.addEventListener(
-        "keydown",
-        event => {
-
-            if (
-                event.key === "Enter"
-            ) {
-                addWord();
-            }
-
-        }
-    );
-
-const darkMode =
-    document.getElementById(
-        "darkMode"
-    );
-
-if (darkMode) {
-
-    darkMode.addEventListener(
-        "change",
-        async () => {
-
-            document.body.classList.toggle(
-                "dark",
-                darkMode.checked
-            );
-
-            await chrome.storage.sync.set({
-                darkMode:
-                    darkMode.checked
-            });
-
-        }
-    );
-
-}
-
-chrome.storage.onChanged.addListener(
-    () => {
-        loadData();
-    }
-);
-
-loadData();
+    data.blockedWords.forEach(word => {
+        rows.push(`word,
