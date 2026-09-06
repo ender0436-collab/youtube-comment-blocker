@@ -1,18 +1,179 @@
+:root {
+    --bg: #ffffff;
+    --card: #f5f5f5;
+    --text: #222222;
+    --border: #dddddd;
+    --accent: #cc0000;
+}
+
+body.dark {
+    --bg: #181818;
+    --card: #242424;
+    --text: #ffffff;
+    --border: #444444;
+}
+
 body {
-    font-family: sans-serif;
-    max-width: 800px;
+    margin: 0;
+    padding: 24px;
+
+    background: var(--bg);
+    color: var(--text);
+
+    font-family:
+        "Segoe UI",
+        sans-serif;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.container {
+    max-width: 900px;
     margin: auto;
-    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 24px;
+}
+
+.header h1 {
+    margin: 0;
+}
+
+.subtitle {
+    margin-top: 4px;
+    opacity: 0.7;
+    font-size: 14px;
+}
+
+.theme-toggle {
+    cursor: pointer;
+    user-select: none;
+    font-size: 14px;
+}
+
+.card {
+    background: var(--card);
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    padding: 16px;
+
+    margin-bottom: 20px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 12px;
+}
+
+.section-header h2 {
+    margin: 0;
+}
+
+.count-badge {
+    background: var(--accent);
+    color: white;
+
+    border-radius: 999px;
+
+    padding: 4px 10px;
+
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.input-row {
+    display: flex;
+    gap: 8px;
+
+    margin-bottom: 16px;
 }
 
 input {
-    width: 300px;
-}
+    flex: 1;
 
-li {
-    margin: 5px 0;
+    padding: 10px 12px;
+
+    border-radius: 8px;
+    border: 1px solid var(--border);
+
+    background: var(--bg);
+    color: var(--text);
+
+    box-sizing: border-box;
 }
 
 button {
-    margin-left: 5px;
+    padding: 10px 16px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: var(--accent);
+    color: white;
+
+    cursor: pointer;
+
+    transition: opacity 0.15s ease;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+ul {
+    list-style: none;
+
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 10px 0;
+
+    border-bottom: 1px solid var(--border);
+}
+
+li:last-child {
+    border-bottom: none;
+}
+
+li button {
+    background: #666666;
+}
+
+li button:hover {
+    background: #444444;
+}
+
+@media (max-width: 640px) {
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .input-row {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+    }
 }
