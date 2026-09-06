@@ -9,25 +9,18 @@ async function loadData() {
     renderUsers(data.blockedUsers);
     renderWords(data.blockedWords);
 
-    document.getElementById(
-        "userCount"
-    ).textContent =
+    document.getElementById("userCount").textContent =
         data.blockedUsers.length;
 
-    document.getElementById(
-        "wordCount"
-    ).textContent =
+    document.getElementById("wordCount").textContent =
         data.blockedWords.length;
 
     const darkMode =
-        document.getElementById(
-            "darkMode"
-        );
+        document.getElementById("darkMode");
 
     if (darkMode) {
 
-        darkMode.checked =
-            data.darkMode;
+        darkMode.checked = data.darkMode;
 
         document.body.classList.toggle(
             "dark",
@@ -39,9 +32,7 @@ async function loadData() {
 function renderUsers(users) {
 
     const ul =
-        document.getElementById(
-            "userList"
-        );
+        document.getElementById("userList");
 
     ul.innerHTML = "";
 
@@ -67,15 +58,14 @@ function renderUsers(users) {
         li.appendChild(btn);
 
         ul.appendChild(li);
+
     });
 }
 
 function renderWords(words) {
 
     const ul =
-        document.getElementById(
-            "wordList"
-        );
+        document.getElementById("wordList");
 
     ul.innerHTML = "";
 
@@ -101,15 +91,14 @@ function renderWords(words) {
         li.appendChild(btn);
 
         ul.appendChild(li);
+
     });
 }
 
 async function addUser() {
 
     const input =
-        document.getElementById(
-            "userInput"
-        );
+        document.getElementById("userInput");
 
     const value =
         input.value.trim();
@@ -140,9 +129,7 @@ async function addUser() {
 async function addWord() {
 
     const input =
-        document.getElementById(
-            "wordInput"
-        );
+        document.getElementById("wordInput");
 
     const value =
         input.value.trim();
@@ -213,8 +200,211 @@ async function exportCsv() {
     rows.push("type,value");
 
     data.blockedUsers.forEach(user => {
-        rows.push(`user,"${user}"`);
+        rows.push(
+            `user,"${user.replace(/"/g, '""')}"`
+        );
     });
 
     data.blockedWords.forEach(word => {
-        rows.push(`word,
+        rows.push(
+            `word,"${word.replace(/"/g, '""')}"`
+        );
+    });
+
+    const csv =
+        rows.join("\n");
+
+    const blob =
+        new Blob(
+            [csv],
+            {
+                type:
+                    "text/csv;charset=utf-8"
+            }
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const a =
+        document.createElement("a");
+
+    a.href = url;
+
+    a.download =
+        "youtube-comment-blocker.csv";
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    document.body.removeChild(a);
+
+    URL.revokeObjectURL(url);
+}
+
+async function importCsv(event) {
+
+    const file =
+        event.target.files[0];
+
+    if (!file) {
+        return;
+    }
+
+    const text =
+        await file.text();
+
+    const blockedUsers = [];
+    const blockedWords = [];
+
+    const lines =
+        text.split(/\r?\n/);
+
+    lines.slice(1).forEach(line => {
+
+        if (!line.trim()) {
+            return;
+        }
+
+        const comma =
+            line.indexOf(",");
+
+        if (comma < 0) {
+            return;
+        }
+
+        const type =
+            line.substring(0, comma);
+
+        const value =
+            line
+                .substring(comma + 1)
+                .replace(/^"/, "")
+                .replace(/"$/, "")
+                .replace(/""/g, '"');
+
+        if (type === "user") {
+            blockedUsers.push(value);
+        }
+
+        if (type === "word") {
+            blockedWords.push(value);
+        }
+
+    });
+
+    await chrome.storage.sync.set({
+        blockedUsers:
+            [...new Set(blockedUsers)],
+        blockedWords:
+            [...new Set(blockedWords)]
+    });
+
+    alert(
+        "CSVのインポートが完了しました。"
+    );
+
+    event.target.value = "";
+}
+
+document
+    .getElementById("addUser")
+    .addEventListener(
+        "click",
+        addUser
+    );
+
+document
+    .getElementById("addWord")
+    .addEventListener(
+        "click",
+        addWord
+    );
+
+document
+    .getElementById("exportCsv")
+    .addEventListener(
+        "click",
+        exportCsv
+    );
+
+document
+    .getElementById("importCsvButton")
+    .addEventListener(
+        "click",
+        () => {
+            document
+                .getElementById("importCsv")
+                .click();
+        }
+    );
+
+document
+    .getElementById("importCsv")
+    .addEventListener(
+        "change",
+        importCsv
+    );
+
+document
+    .getElementById("userInput")
+    .addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Enter"
+            ) {
+                addUser();
+            }
+
+        }
+    );
+
+document
+    .getElementById("wordInput")
+    .addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Enter"
+            ) {
+                addWord();
+            }
+
+        }
+    );
+
+const darkMode =
+    document.getElementById("darkMode");
+
+if (darkMode) {
+
+    darkMode.addEventListener(
+        "change",
+        async event => {
+
+            document.body.classList.toggle(
+                "dark",
+                event.target.checked
+            );
+
+            await chrome.storage.sync.set({
+                darkMode:
+                    event.target.checked
+            });
+
+        }
+    );
+
+}
+
+chrome.storage.onChanged.addListener(
+    () => {
+        loadData();
+    }
+);
+
+loadData();
