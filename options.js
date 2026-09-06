@@ -2,28 +2,73 @@ async function loadData() {
 
     const data = await chrome.storage.sync.get({
         blockedUsers: [],
-        blockedWords: []
+        blockedWords: [],
+        darkMode: false
     });
 
     renderUsers(data.blockedUsers);
     renderWords(data.blockedWords);
+
+    document.getElementById(
+        "userCount"
+    ).textContent =
+        data.blockedUsers.length;
+
+    document.getElementById(
+        "wordCount"
+    ).textContent =
+        data.blockedWords.length;
+
+    const darkMode =
+        document.getElementById(
+            "darkMode"
+        );
+
+    if (darkMode) {
+
+        darkMode.checked =
+            data.darkMode;
+
+        document.body.classList.toggle(
+            "dark",
+            data.darkMode
+        );
+
+    }
 }
 
 function renderUsers(users) {
 
-    const ul = document.getElementById("userList");
+    const ul =
+        document.getElementById(
+            "userList"
+        );
+
     ul.innerHTML = "";
 
     users.forEach(user => {
 
-        const li = document.createElement("li");
+        const li =
+            document.createElement(
+                "li"
+            );
 
-        const text = document.createTextNode(user);
+        const text =
+            document.createElement(
+                "span"
+            );
 
-        const btn = document.createElement("button");
+        text.textContent = user;
+
+        const btn =
+            document.createElement(
+                "button"
+            );
+
         btn.textContent = "削除";
 
-        btn.onclick = () => removeUser(user);
+        btn.onclick = () =>
+            removeUser(user);
 
         li.appendChild(text);
         li.appendChild(btn);
@@ -35,19 +80,36 @@ function renderUsers(users) {
 
 function renderWords(words) {
 
-    const ul = document.getElementById("wordList");
+    const ul =
+        document.getElementById(
+            "wordList"
+        );
+
     ul.innerHTML = "";
 
     words.forEach(word => {
 
-        const li = document.createElement("li");
+        const li =
+            document.createElement(
+                "li"
+            );
 
-        const text = document.createTextNode(word);
+        const text =
+            document.createElement(
+                "span"
+            );
 
-        const btn = document.createElement("button");
+        text.textContent = word;
+
+        const btn =
+            document.createElement(
+                "button"
+            );
+
         btn.textContent = "削除";
 
-        btn.onclick = () => removeWord(word);
+        btn.onclick = () =>
+            removeWord(word);
 
         li.appendChild(text);
         li.appendChild(btn);
@@ -57,55 +119,82 @@ function renderWords(words) {
     });
 }
 
-document.getElementById("addUser").onclick = async () => {
+async function addUser() {
 
-    const input = document.getElementById("userInput");
-    const value = input.value.trim();
+    const input =
+        document.getElementById(
+            "userInput"
+        );
 
-    if (!value) return;
+    const value =
+        input.value.trim();
 
-    const data = await chrome.storage.sync.get({
-        blockedUsers: []
-    });
+    if (!value) {
+        return;
+    }
 
-    data.blockedUsers.push(value);
+    const data =
+        await chrome.storage.sync.get({
+            blockedUsers: []
+        });
+
+    const users = [
+        ...new Set([
+            ...data.blockedUsers,
+            value
+        ])
+    ];
 
     await chrome.storage.sync.set({
-        blockedUsers: [...new Set(data.blockedUsers)]
+        blockedUsers: users
     });
 
     input.value = "";
 
     loadData();
-};
+}
 
-document.getElementById("addWord").onclick = async () => {
+async function addWord() {
 
-    const input = document.getElementById("wordInput");
-    const value = input.value.trim();
+    const input =
+        document.getElementById(
+            "wordInput"
+        );
 
-    if (!value) return;
+    const value =
+        input.value.trim();
 
-    const data = await chrome.storage.sync.get({
-        blockedWords: []
-    });
+    if (!value) {
+        return;
+    }
 
-    data.blockedWords.push(value);
+    const data =
+        await chrome.storage.sync.get({
+            blockedWords: []
+        });
+
+    const words = [
+        ...new Set([
+            ...data.blockedWords,
+            value
+        ])
+    ];
 
     await chrome.storage.sync.set({
-        blockedWords: [...new Set(data.blockedWords)]
+        blockedWords: words
     });
 
     input.value = "";
 
     loadData();
-};
+}
 
 async function removeUser(user) {
 
-    const data = await chrome.storage.sync.get({
-        blockedUsers: []
-    });
+    const data =
+        await chrome.storage.sync.get({
+            blockedUsers: []
+        });
 
     await chrome.storage.sync.set({
         blockedUsers:
@@ -119,9 +208,10 @@ async function removeUser(user) {
 
 async function removeWord(word) {
 
-    const data = await chrome.storage.sync.get({
-        blockedWords: []
-    });
+    const data =
+        await chrome.storage.sync.get({
+            blockedWords: []
+        });
 
     await chrome.storage.sync.set({
         blockedWords:
@@ -132,5 +222,81 @@ async function removeWord(word) {
 
     loadData();
 }
+
+document
+    .getElementById("addUser")
+    ?.addEventListener(
+        "click",
+        addUser
+    );
+
+document
+    .getElementById("addWord")
+    ?.addEventListener(
+        "click",
+        addWord
+    );
+
+document
+    .getElementById("userInput")
+    ?.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Enter"
+            ) {
+                addUser();
+            }
+
+        }
+    );
+
+document
+    .getElementById("wordInput")
+    ?.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Enter"
+            ) {
+                addWord();
+            }
+
+        }
+    );
+
+const darkMode =
+    document.getElementById(
+        "darkMode"
+    );
+
+if (darkMode) {
+
+    darkMode.addEventListener(
+        "change",
+        async () => {
+
+            document.body.classList.toggle(
+                "dark",
+                darkMode.checked
+            );
+
+            await chrome.storage.sync.set({
+                darkMode:
+                    darkMode.checked
+            });
+
+        }
+    );
+
+}
+
+chrome.storage.onChanged.addListener(
+    () => {
+        loadData();
+    }
+);
 
 loadData();
