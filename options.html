@@ -3,29 +3,89 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>YouTube Blocker Pro</title>
+    <title>YouTube Comment Blocker</title>
     <link rel="stylesheet" href="options.css">
 </head>
 
 <body>
 
-    <h1>YouTube Blocker Pro</h1>
+    <div class="container">
 
-    <h2>ブロックユーザー</h2>
+        <header class="header">
 
-    <input id="userInput" type="text">
-    <button id="addUser">追加</button>
+            <div>
+                <h1>YouTube Comment Blocker</h1>
+                <p class="subtitle">
+                    ユーザーとNGワードを管理します
+                </p>
+            </div>
 
-    <ul id="userList"></ul>
+            <label class="theme-toggle">
+                <input
+                    type="checkbox"
+                    id="darkMode">
+                <span>🌙 ダークモード</span>
+            </label>
 
-    <hr>
+        </header>
 
-    <h2>NGワード</h2>
+        <section class="card">
 
-    <input id="wordInput" type="text">
-    <button id="addWord">追加</button>
+            <div class="section-header">
+                <h2>🚫 ブロックユーザー</h2>
+                <span
+                    id="userCount"
+                    class="count-badge">
+                    0
+                </span>
+            </div>
 
-    <ul id="wordList"></ul>
+            <div class="input-row">
+
+                <input
+                    id="userInput"
+                    type="text"
+                    placeholder="@ユーザー名">
+
+                <button id="addUser">
+                    追加
+                </button>
+
+            </div>
+
+            <ul id="userList"></ul>
+
+        </section>
+
+        <section class="card">
+
+            <div class="section-header">
+                <h2>📝 NGワード</h2>
+                <span
+                    id="wordCount"
+                    class="count-badge">
+                    0
+                </span>
+            </div>
+
+            <div class="input-row">
+
+                <input
+                    id="wordInput"
+                    type="text"
+                    placeholder="NGワード">
+
+                <button id="addWord">
+                    追加
+                </button>
+
+            </div>
+
+            <ul id="wordList"></ul>
+
+        </section>
+
+    </div>
 
     <script src="options.js"></script>
 
