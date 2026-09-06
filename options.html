@@ -15,29 +15,44 @@
 
             <div>
                 <h1>YouTube Comment Blocker</h1>
+
                 <p class="subtitle">
                     ユーザーとNGワードを管理します
                 </p>
             </div>
 
-            <label class="theme-toggle">
-                <input
-                    type="checkbox"
-                    id="darkMode">
-                <span>🌙 ダークモード</span>
-            </label>
+            <div class="theme-toggle">
+
+                <span class="theme-label">
+                    🌙 ダークモード
+                </span>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="darkMode">
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
 
         </header>
 
         <section class="card">
 
             <div class="section-header">
+
                 <h2>🚫 ブロックユーザー</h2>
+
                 <span
                     id="userCount"
                     class="count-badge">
                     0
                 </span>
+
             </div>
 
             <div class="input-row">
@@ -60,12 +75,15 @@
         <section class="card">
 
             <div class="section-header">
+
                 <h2>📝 NGワード</h2>
+
                 <span
                     id="wordCount"
                     class="count-badge">
                     0
                 </span>
+
             </div>
 
             <div class="input-row">
@@ -102,8 +120,8 @@
                 </button>
 
                 <input
-                    type="file"
                     id="importCsv"
+                    type="file"
                     accept=".csv"
                     hidden>
 
