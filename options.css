@@ -33,10 +33,6 @@ body {
 }
 
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
     margin-bottom: 24px;
 }
 
@@ -60,7 +56,6 @@ body {
 }
 
 .tab-button {
-
     flex: 1;
 
     padding: 14px;
@@ -86,10 +81,8 @@ body {
 }
 
 .tab-button.active {
-
     background: var(--accent);
-
-    color: white;
+    color: #ffffff;
 }
 
 .tab-content {
@@ -101,18 +94,19 @@ body {
 }
 
 /* -------------------- */
-/* ダークモードスイッチ */
+/* ダークモード */
 /* -------------------- */
 
 .theme-toggle {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+
     gap: 12px;
 }
 
 .theme-label {
     font-size: 14px;
-    white-space: nowrap;
 }
 
 .switch {
@@ -219,4 +213,180 @@ body {
 
 .count-badge {
     background: var(--accent);
-    color
+    color: #ffffff;
+
+    border-radius: 999px;
+
+    padding: 4px 10px;
+
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* -------------------- */
+/* 入力 */
+/* -------------------- */
+
+.input-row {
+    display: flex;
+    gap: 8px;
+
+    margin-bottom: 16px;
+}
+
+input[type="text"] {
+    flex: 1;
+
+    padding: 10px 12px;
+
+    border-radius: 8px;
+    border: 1px solid var(--border);
+
+    background: var(--bg);
+    color: var(--text);
+
+    box-sizing: border-box;
+}
+
+/* -------------------- */
+/* ボタン */
+/* -------------------- */
+
+button {
+    padding: 10px 16px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: var(--accent);
+    color: #ffffff;
+
+    cursor: pointer;
+
+    transition:
+        opacity 0.15s ease,
+        background-color 0.15s ease;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+li button {
+    background: #555555;
+}
+
+li button:hover {
+    background: #333333;
+}
+
+/* -------------------- */
+/* リスト */
+/* -------------------- */
+
+ul {
+    list-style: none;
+
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 10px 0;
+
+    border-bottom: 1px solid var(--border);
+}
+
+li:last-child {
+    border-bottom: none;
+}
+
+/* -------------------- */
+/* 設定 */
+/* -------------------- */
+
+.settings-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* -------------------- */
+/* GitHubボタン */
+/* -------------------- */
+
+.settings-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 12px 16px;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    background: var(--card);
+
+    color: var(--text);
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.15s ease,
+        border-color 0.2s ease;
+}
+
+.settings-link:hover {
+    background: rgba(127, 127, 127, 0.12);
+
+    border-color: var(--accent);
+
+    transform: translateY(-1px);
+}
+
+.settings-link:active {
+    transform: translateY(0);
+}
+
+.github-icon {
+    width: 20px;
+    height: 20px;
+
+    flex-shrink: 0;
+}
+
+/* -------------------- */
+/* モバイル対応 */
+/* -------------------- */
+
+@media (max-width: 640px) {
+
+    .tabs {
+        flex-direction: column;
+    }
+
+    .tab-button:not(:last-child) {
+        border-right: 2px solid var(--border);
+        border-bottom: none;
+    }
+
+    .input-row {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    .settings-link {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
