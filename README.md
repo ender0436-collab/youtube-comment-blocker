@@ -53,7 +53,5 @@ YouTubeのコメント欄に表示される **🚫** アイコンをクリック
 このプロジェクトが役に立った場合は、
 開発継続のための支援をご検討ください。
 
-- GitHub Sponsors
-[GitHub Sponsors](https://github.com/sponsors/ender0436-collab)
-- Buy Me a Coffee
-[☕ Buy Me a Coffee](https://buymeacoffee.com/ender0436)
+- [GitHub Sponsors](https://github.com/sponsors/ender0436-collab)
+- [☕ Buy Me a Coffee](https://buymeacoffee.com/ender0436)
