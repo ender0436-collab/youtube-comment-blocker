@@ -3,17 +3,78 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>YouTube Blocker</title>
+    <title>YouTube Comment Blocker</title>
     <link rel="stylesheet" href="popup.css">
 </head>
 
 <body>
 
-    <h2>YouTube Blocker</h2>
+    <div class="container">
 
-    <button id="openOptions">
-        設定
-    </button>
+        <h1 class="title">
+
+            <img
+                src="icons/32.png"
+                alt="icon"
+                class="title-icon">
+
+ 1>
+
+        <div class="section">
+
+            <label for="userInput">
+
+                ユーザー追加
+
+            </label>
+
+            <div class="input-row">
+
+                <input
+                    id="userInput"
+                    type="text"
+                    placeholder="@ユーザー名">
+
+                <button id="addUser">
+                    追加
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="section">
+
+            <label for="wordInput">
+
+                NGワード追加
+
+            </label>
+
+            <div class="input-row">
+
+                <input
+                    id="wordInput"
+                    type="text"
+                    placeholder="NGワード">
+
+                <button id="addWord">
+                    追加
+                </button>
+
+            </div>
+
+        </div>
+
+        <button
+            id="openOptions"
+            class="settings-button">
+
+            ⚙ 設定を開く
+
+        </button>
+
+    </div>
 
     <script src="popup.js"></script>
 
