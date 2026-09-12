@@ -407,4 +407,58 @@ chrome.storage.onChanged.addListener(
     }
 );
 
+document
+    .querySelectorAll(".tab-button")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                document
+                    .querySelectorAll(
+                        ".tab-button"
+                    )
+                    .forEach(btn => {
+
+                        btn.classList.remove(
+                            "active"
+                        );
+
+                    });
+
+                document
+                    .querySelectorAll(
+                        ".tab-content"
+                    )
+                    .forEach(tab => {
+
+                        tab.classList.remove(
+                            "active"
+                        );
+
+                    });
+
+                button.classList.add(
+                    "active"
+                );
+
+                const targetTab =
+                    document.getElementById(
+                        button.dataset.tab
+                    );
+
+                if (targetTab) {
+
+                    targetTab.classList.add(
+                        "active"
+                    );
+
+                }
+
+            }
+        );
+
+    });
+
 loadData();
