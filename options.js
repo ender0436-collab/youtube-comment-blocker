@@ -314,9 +314,9 @@ async function importCsv(event) {
             [...new Set(blockedWords)]
     });
 
-    alert(
-        "CSVのインポートが完了しました。"
-    );
+alert(
+    "CSVのインポートが完了しました。\n現在の設定はインポート内容で上書きされています。"
+);
 
     event.target.value = "";
 }
