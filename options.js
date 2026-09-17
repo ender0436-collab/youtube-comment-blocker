@@ -252,6 +252,19 @@ async function importCsv(event) {
         return;
     }
 
+    const confirmed =
+        confirm(
+            "CSVをインポートすると現在のブロックユーザーとNGワードは上書きされます。\n\n続行しますか？"
+        );
+
+    if (!confirmed) {
+
+        event.target.value = "";
+
+        return;
+
+    }
+
     const text =
         await file.text();
 
